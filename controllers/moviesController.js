@@ -6,7 +6,14 @@ const index = (req, res) => {
    const sql = 'SELECT * FROM movies';
    connection.query(sql, (err, results) => {
       if (err) return res.status(500).json({ error: 'Errore durante il caricamento dei film' });
-      res.json(results);
+      const moviesList = results.map(movie => {
+         return {
+            ...movie,
+            image: `${req.defaultPath}/img/movies/${movie.image}`
+         }
+      })
+
+      res.json(moviesList);
    })
 
 }
@@ -27,11 +34,14 @@ const show = (req, res) => {
       connection.query(sqlReviews, [id], (err, resultsReviews) => {
          if (err) return res.status(500).json({ error: 'Errore durante il caricamento delle recensioni' });
 
-         const movie = results[0];
-         res.json({
-            ...movie,
-            reviews: resultsReviews
+         const movies = results.map(movie => {
+            return {
+               ...movie,
+               image: `${req.defaultPath}/img/movies/${movie.image}`,
+               reviews: resultsReviews
+            }
          })
+         res.json(movies);
       })
 
    })

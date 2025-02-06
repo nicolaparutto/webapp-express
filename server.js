@@ -10,7 +10,12 @@ const moviesRouter = require('./routers/moviesRouter');
 //middlewares import:
 const notFound = require('./middlewares/notFound.js');
 const errorsHandler = require('./middlewares/errorsHandler.js');
+const defaultPath = require('./middlewares/defaultPath.js')
 
+app.use(express.static('public'));
+
+
+app.use(defaultPath);
 //=======================================
 
 //server root:
