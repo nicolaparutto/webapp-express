@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+//env:
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 
@@ -13,9 +14,8 @@ const errorsHandler = require('./middlewares/errorsHandler.js');
 const defaultPath = require('./middlewares/defaultPath.js')
 
 app.use(express.static('public'));
-
-
 app.use(defaultPath);
+
 //=======================================
 
 //server root:

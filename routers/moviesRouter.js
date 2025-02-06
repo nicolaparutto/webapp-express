@@ -6,7 +6,6 @@ const moviesController = require('../controllers/moviesController');
 //Rotte CRUD:
 //Index
 router.get('/', moviesController.index);
-
 //Show
 router.get('/:id', moviesController.show);
 
