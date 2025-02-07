@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
+//cors middleware:
+const cors = require('cors');
 
 //env:
 require('dotenv').config();
 const port = process.env.PORT || 3000;
+
+app.use(cors({
+   origin: 'http://localhost:5173',
+}))
 
 //moviesRouter import:
 const moviesRouter = require('./routers/moviesRouter');
