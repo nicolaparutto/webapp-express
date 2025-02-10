@@ -39,7 +39,24 @@ const show = (req, res) => {
    })
 }
 
+const addReview = (req, res) => {
+   const id = req.params.id;
+
+   const { text, name, vote } = req.body;
+
+   const sql = `
+   INSERT INTO reviews (movie_id, name, vote, text)
+   VALUES (?, ?, ?, ?)
+   `;
+   connection.query(sql, [id, name, vote, text], (err, results) => {
+      if (err) return res.status(500).json({ error: 'Errore durante l\'aggiunta della recensione' });
+      res.status(201);
+      res.json({ message: 'Recensione aggiunta con successo', id: results.insertId });
+   })
+}
+
 module.exports = {
    index,
-   show
+   show,
+   addReview
 }
