@@ -39,6 +39,7 @@ const show = (req, res) => {
    })
 }
 
+//STORE (new review) (post)
 const addReview = (req, res) => {
    const id = req.params.id;
 
@@ -55,8 +56,14 @@ const addReview = (req, res) => {
    })
 }
 
+//STORE (new movie) (post)
+const addMovie = (req, res) => {
+   res.json({ message: 'Film aggiunto con successo' })
+}
+
 module.exports = {
    index,
    show,
-   addReview
+   addReview,
+   addMovie
 }
