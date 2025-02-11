@@ -58,7 +58,14 @@ const addReview = (req, res) => {
 
 //STORE (new movie) (post)
 const addMovie = (req, res) => {
-   res.json({ message: 'Film aggiunto con successo' })
+   const { title, director, genre, relase_year, abstract } = req.body;
+   const imageName = req.file.filename;
+
+   const sql = 'INSERT INTO movies (title, director, genre, relase_year, abstract, image) VALUES (?, ?, ?, ?, ?, ?)';
+   connection.query(sql[title, director, genre, relase_year, abstract, imageName], (err, results) => {
+      if (err) return res.status(500).json({ error: 'Errore durante l\'aggiunta del film' });
+      res.status(201).json({ status: 'Added', message: 'Film aggiunto con successo' });
+   })
 }
 
 module.exports = {
