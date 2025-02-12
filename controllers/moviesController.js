@@ -1,4 +1,6 @@
 const connection = require('../data/moviesDB');
+const path = require('path');
+const fs = require('fs');
 
 //Index (get)
 const index = (req, res) => {
@@ -6,7 +8,6 @@ const index = (req, res) => {
    connection.query(sql, (err, results) => {
       if (err) return res.status(500).json({ error: 'Errore durante il caricamento dei film' });
       const moviesList = results.map(movie => {
-         console.log(movie)
          return {
             ...movie,
             image: `${req.defaultPath}/img/movies/${movie.image}`
@@ -70,9 +71,34 @@ const addMovie = (req, res) => {
    })
 }
 
+//DESTROY (delete movie) (delete)
+const deleteMovie = (req, res) => {
+   const id = req.params.id;
+
+   const sql = 'DELETE FROM movies WHERE id = ?';
+   const sqlDeleteImg = 'SELECT image FROM movies WHERE id = ?';
+
+   connection.query(sqlDeleteImg, [id], (err, results) => {
+
+      const imageName = results[0].image;
+
+      const imagePath = path.join(__dirname, '../public/img/movies', imageName);
+
+      fs.unlink(imagePath, (err) => {
+         console.log(err)
+      })
+
+      connection.query(sql, [id], (err, result) => {
+         if (err) return res.status(500).json({ error: 'Errore durante l\'elliminazione del film' });
+         res.status(201).json({ message: 'Film elliminato con successo' });
+      })
+   })
+}
+
 module.exports = {
    index,
    show,
    addReview,
-   addMovie
+   addMovie,
+   deleteMovie
 }

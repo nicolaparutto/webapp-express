@@ -13,5 +13,6 @@ router.post('/:id/reviews', moviesController.addReview);
 // Store Movie
 router.post('/', upload.single('image'), moviesController.addMovie);
 
+router.delete('/:id', moviesController.deleteMovie)
 
 module.exports = router;
